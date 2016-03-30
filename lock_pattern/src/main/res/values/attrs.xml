@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PatternView">
+        <attr name="normal" format="reference" />
+        <attr name="select" format="reference" />
+        <attr name="warn" format="reference" />
+        <attr name="item_padding" format="dimension" />
+        <attr name="line_width" format="dimension" />
+        <attr name="line_select" format="color" />
+        <attr name="line_warn" format="color" />
+    </declare-styleable>
+
+</resources>
