@@ -1,15 +1,21 @@
 package com.carsmart.lockpattern.example;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.carsmart.lockpattern.LockPatternView;
+import com.carsmart.lockpattern.PatternView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    PatternView pattern;
+    LockPatternView lockPattern;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,36 +23,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pattern = (PatternView) findViewById(R.id.pattern);
+        lockPattern = (LockPatternView) findViewById(R.id.lockPattern);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        lockPattern.setContent(new LockPatternView.OnSettingListener() {
+            boolean isFirst = true;
+            String password = null;
+
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onSetting(List<String> records) {
+                String result = getPassword(records);
+                if (isFirst) {
+                    isFirst = false;
+                    pattern.setContent(new ArrayList<>(records));
+                    password = result;
+                    lockPattern.gotoNormal();
+                } else {
+                    if (result.equals(password)) {
+                        lockPattern.gotoNormal();
+                        show("设置成功");
+                        finish();
+                    } else {
+                        lockPattern.gotoWarn();
+                        show("设置错误");
+                    }
+                }
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    protected void show(String string) {
+        if (toast == null) {
+            toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(string);
         }
-
-        return super.onOptionsItemSelected(item);
+        toast.show();
     }
+
+    private String getPassword(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+        }
+        return sb.toString();
+    }
+
 }
