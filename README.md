@@ -8,7 +8,7 @@
 
 ##使用方式
 1.layout.xml引用控件
-#### 代码块
+
 ```xml
     <com.carsmart.lockpattern.LockPatternView
         android:layout_width="wrap_content"
@@ -23,6 +23,7 @@
 ```
 
 2.Java调用：根据逻辑功能实现如下接口
+
 ```java 
 
     //校验
