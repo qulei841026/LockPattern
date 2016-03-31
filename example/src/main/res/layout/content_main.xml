@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,8 +14,29 @@
     tools:context="com.carsmart.lockpattern.example.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <com.carsmart.lockpattern.PatternView
+        android:id="@+id/pattern"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:item_padding="3dp"
+        app:line_select="@color/line_normal"
+        app:line_width="1dp"
+        app:normal="@mipmap/small_normal"
+        app:select="@mipmap/small_select" />
+
+    <com.carsmart.lockpattern.LockPatternView
+        android:id="@+id/lockPattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:item_padding="15dp"
+        app:line_select="@color/line_normal"
+        app:line_warn="@color/line_warn"
+        app:line_width="2dp"
+        app:normal="@mipmap/large_normal"
+        app:select="@mipmap/large_select"
+        app:warn="@mipmap/large_warn" />
+</LinearLayout>
